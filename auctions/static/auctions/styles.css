@@ -1,3 +1,36 @@
 body {
-    padding: 10px;
+    background-color: #effcf8;
+}
+
+.navbar {
+    background-color: #e4f8f2;
+    padding: 8px 1vw;
+    border-bottom: solid 1px #519983;
+}
+
+#ebarglogo {
+    height: 60px;
+}
+
+.userlink {
+    color: #0465D2;
+    text-decoration: none;
+}
+
+.logout {
+    color: #0465D2;
+    text-decoration: none;
+}
+
+a:hover {
+    color: #50D890;
+}
+
+.menu-nav {
+    background-color: #cff0de;
+    padding: 2px 0.8vw;
+}
+
+.space-left {
+    margin-left: 25px;
 }
