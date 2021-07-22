@@ -12,6 +12,10 @@ body {
     height: 60px;
 }
 
+.signedinuser {
+    text-align: start;
+}
+
 .userlink {
     color: #0465D2;
     text-decoration: none;
@@ -31,6 +35,29 @@ a:hover {
     padding: 2px 0.8vw;
 }
 
-.space-left {
-    margin-left: 25px;
+.menu-nav a:hover {
+    color: #06c55f !important;
+}
+
+.space-right {
+    margin-right: 25px;
+}
+
+@media (min-width: 768px) {
+    .navbar-expand-lg .navbar-collapse {
+        display: flex!important;
+        flex-basis: auto;
+    }
+
+    .navbar-expand-lg .navbar-toggler {
+        display: none;
+    }
+
+    .navbar-expand-lg .navbar-nav {
+        flex-direction: row;
+    }
+
+    .signedinuser {
+        text-align: end;
+    }
 }
