@@ -23,46 +23,85 @@
         </button>
     </div>
     <div><br></div>
-
-    <h1>Active Listings</h1>
+    <h1 id="activelistings">
+        <a href="#activelistings" style="text-decoration: none; color: black;">Active Listings</a>
+    </h1>
     <hr>
 
     <div class="container">
         <div class="row">
-            <div class="col-lg-4 col-md-6 col-sm-12">
+            <div class="col-lg-3 col-md-4 col-sm-6">
+                <div class="card h-100 text-start">
+                    <div class="card-img-top" style="background-image: url('{{ image }}');"></div>
+                    <div class="card-body">
+                        <h5 class="card-title">Title
+                            <span class="badge bg-secondary ctgry-badge">Category</span>
+                        </h5>
+                        Price: <span class="price">$500</span>
+                        <p class="card-text">Lorem ipsum dolor sit, amet consectetur adipisicing e...</p>
+                    </div>
+                    <a href="#" class="btn btn-primary card-footer text-center">
+                        <!-- <div class="card-footer text-center"> -->
+                            View
+                            <!-- <small class="text-muted">View</small> -->
+                        <!-- </div> -->
+                    </a>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-4 col-sm-6">
+                <div class="card h-100 text-start">
+                    <div class="card-img-top" style="background-image: url('{% static 'auctions/img/noimage.webp' %}');"></div>
+                    <div class="card-body">
+                        <h5 class="card-title">Title
+                            <span class="badge bg-secondary ctgry-badge">Category</span>
+                        </h5>
+                        Price: <span class="price">$500</span>
+                        <p class="card-text">Lorem ipsum dolor sit, amet consectetur adipisicing e...</p>
+                    </div>
+                    <a href="#" class="btn btn-primary card-footer text-center">
+                        <!-- <div class="card-footer text-center"> -->
+                            View
+                            <!-- <small class="text-muted">View</small> -->
+                        <!-- </div> -->
+                    </a>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-4 col-sm-6">
                 <div class="card h-100 text-start">
                     <div class="card-img-top">
                     </div>
                     <div class="card-body">
-                        <h5 class="card-title">Card title</h5>
-                        <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+                        <h5 class="card-title">Title
+                            <span class="badge bg-secondary ctgry-badge">Category</span>
+                        </h5>
+                        Price: <span class="price">$500</span>
+                        <p class="card-text">Lorem ipsum dolor sit, amet consectetur adipisicing e...</p>
                     </div>
-                    <div class="card-footer text-center">
-                        <small class="text-muted"><a href="#" class="btn btn-primary">View</a></small>
-                    </div>
+                    <a href="#" class="btn btn-primary card-footer text-center">
+                        <!-- <div class="card-footer text-center"> -->
+                            View
+                            <!-- <small class="text-muted">View</small> -->
+                        <!-- </div> -->
+                    </a>
                 </div>
             </div>
-            <div class="col-lg-4 col-md-6 col-sm-12">
+            <div class="col-lg-3 col-md-4 col-sm-6">
                 <div class="card h-100 text-start">
+                    <div class="card-img-top">
+                    </div>
                     <div class="card-body">
-                        <h5 class="card-title">Card title</h5>
-                        <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+                        <h5 class="card-title">Title
+                            <span class="badge bg-secondary ctgry-badge">Category</span>
+                        </h5>
+                        Price: <span class="price">$500</span>
+                        <p class="card-text">Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
                     </div>
-                    <div class="card-footer text-center">
-                        <small class="text-muted"><a href="#" class="btn btn-primary">View</a></small>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-4 col-md-6 col-sm-12">
-                <div class="card h-100 text-start">
-                    <img src="{% static 'auctions/img/banner2.png' %}" class="card-img-top" alt="...">
-                    <div class="card-body">
-                        <h5 class="card-title">Card title</h5>
-                        <p class="card-text"></p>
-                    </div>
-                    <div class="card-footer text-center">
-                        <small class="text-muted"><a href="#" class="btn btn-primary">View</a></small>
-                    </div>
+                    <a href="#" class="btn btn-primary card-footer text-center">
+                        <!-- <div class="card-footer text-center"> -->
+                            View
+                            <!-- <small class="text-muted">View</small> -->
+                        <!-- </div> -->
+                    </a>
                 </div>
             </div>
         </div>

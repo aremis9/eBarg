@@ -29,6 +29,9 @@ DEBUG = (config('DEBUG_VALUE') == 'True')
 ALLOWED_HOSTS = []
 
 
+
+LOGIN_URL = '/login'
+
 # Application definition
 
 INSTALLED_APPS = [

@@ -91,9 +91,9 @@ hr {
 }
 
 .card {
-    margin: auto;
+    margin: auto auto 50px;
     max-width: 200px;
-    max-height: 400px;
+    max-height: 410px;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 
@@ -108,13 +108,51 @@ hr {
     background-color: transparent;
 }
 
-/* .card-img-top:after {
-    content: "";
-    display: block;
-    padding-bottom: 100%;
-} */
+.card-title {
+    margin-bottom: 0 ;
+}
 
-/* .card-img-top img {
-    width: 100%;
-    height: auto;
-} */
+.ctgry-badge {
+    width: min-content;
+    display: block;
+    font-size: 0.55rem;
+}
+
+.price {
+    color: #27d377;
+}
+
+.card-body {
+    overflow-y: auto;
+}
+
+a.card-footer {
+    color: black;
+    border: none;
+    background-color: #b3e7ca;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.11), 0 6px 20px 0 rgba(0, 0, 0, 0.062);
+}
+
+
+
+/* Login */
+
+form {
+    box-sizing: border-box;
+    display: flex;
+    flex-flow: column;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+
+.input-group, .mb3 {
+    border-radius: 4px;
+    background-color: transparent;
+    box-shadow: rgba(0, 0, 0, 0.08) 0px 2px 5px, rgba(0, 0, 0, 0.08) 0px 2px 5px;
+}
+
+.logininput .label {
+    background-color: #b3e7ca;
+    width: 100px;
+}

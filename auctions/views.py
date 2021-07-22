@@ -1,39 +1,50 @@
 from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.decorators import login_required
 from django.db import IntegrityError
 from django.http import HttpResponse, HttpResponseRedirect
-from django.shortcuts import render
+from django.shortcuts import redirect, render
 from django.urls import reverse
+from django import forms
 
 from .models import User
 
+user = ''
 
 def index(request):
-    return render(request, "auctions/index.html")
+    return render(request, "auctions/index.html", {
+        'user': user,
+        'image': 'https://qph.fs.quoracdn.net/main-qimg-06697523db4cb85b25b8cf1ce95f2d4e'
+    })
+
 
 
 def login_view(request):
+    if request.user.is_authenticated:
+        return redirect('/')
     if request.method == "POST":
 
         # Attempt to sign user in
         username = request.POST["username"]
         password = request.POST["password"]
+        global user
         user = authenticate(request, username=username, password=password)
-
         # Check if authentication successful
         if user is not None:
             login(request, user)
-            return HttpResponseRedirect(reverse("index"))
+            return HttpResponseRedirect(reverse('index'))
         else:
+            user = ''
             return render(request, "auctions/login.html", {
                 "message": "Invalid username and/or password."
             })
     else:
         return render(request, "auctions/login.html")
 
-
+@login_required
 def logout_view(request):
+
     logout(request)
-    return HttpResponseRedirect(reverse("index"))
+    return HttpResponseRedirect(reverse("login"))
 
 
 def register(request):

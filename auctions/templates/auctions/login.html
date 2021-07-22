@@ -2,23 +2,28 @@
 
 {% block body %}
 
-    <h2>Login</h2>
-
     {% if message %}
         <div>{{ message }}</div>
     {% endif %}
 
     <form action="{% url 'login' %}" method="post">
         {% csrf_token %}
-        <div class="form-group">
-            <input autofocus class="form-control" type="text" name="username" placeholder="Username">
-        </div>
-        <div class="form-group">
-            <input class="form-control" type="password" name="password" placeholder="Password">
+        <h1>Login</h1>
+        <div><br></div>
+        <div class="logininput">
+            <div class="input-group mb-3">
+                <span class="input-group-text label" id="inputGroup-sizing-default">Username</span>
+                <input type="text" name="username" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+            </div>
+            <div class="input-group mb-3">
+                <span class="input-group-text label" id="inputGroup-sizing-default">Password</span>
+                <input type="password" name="password" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+            </div>
         </div>
         <input class="btn btn-primary" type="submit" value="Login">
+        <div><br><br></div>
+        Don't have an account? <a href="{% url 'register' %}">Register here.</a>
     </form>
 
-    Don't have an account? <a href="{% url 'register' %}">Register here.</a>
 
 {% endblock %}
