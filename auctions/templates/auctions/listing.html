@@ -1,35 +1,67 @@
 {% extends "auctions/layout.html" %}
 {% load static %}
 {% block body %}
-    
+    <div><br></div>
     <div class="container">
         <div class="row listing-row">
             <div class="col listing-image-container">
                 <div class="listing-image"></div>
             </div>
-            <div class="col-lg-8 col-sm-12">
-                <div class=" listing-detail">
+            <div class="col-lg-8 col-sm-12 listing-mid">
+                <div class="listing-detail">
                     <h2>Lorem ipsum dolor sit amet, consectetur adipisicing elit.
                         <a class="btn badge bg-primary ctgry-badge wshlist">Add to wishlist</a>
                     </h2>
                     <h5>Price: <span class="price">$500</span></h5>
                     <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consequuntur nobis, quae id ut dicta itaque dolore dolor, vero consectetur commodi amet libero provident ex, ab sint. Ratione obcaecati iure laborum.<span class="badge bg-secondary ctgry-badge">Category</span></p>
                 </div>
+                <div class="placebid">
+                    <a href="" style="text-decoration: none;">
+                        Add to Watchlist <img src="{% static 'auctions/img/star-regular.svg' %}" alt="*" style="width: 20px; vertical-align: middle; padding-bottom: 4px;">
+                    </a>
+                    <form action="{% url 'login' %}" method="post" class="addcomment">
+                        {% csrf_token %}
+                        <div class="input-group mb-3">
+                            <input type="text" class="form-control" placeholder="$$$" aria-label="$$$" aria-describedby="button-addon2">
+                            <input class="btn btn-outline-primary" type="submit" id="button-addon2" value="Place Bid">
+                        </div>
+                    </form>
+                </div>
             </div>
         </div>
     </div>
 
-    <div class="container">
+    <div class="container below-listing">
         <div class="row">
-            <div class="col-lg-8 col-sm-12">
-                hi
+            <div class="col-lg-8 col-sm-12 comment-section">
+                <h4>Comments</h4>
+                <div class="comments">
+                    <div>@username</div>
+                    <div>Lorem ipsum dolor sit amet consectetur adipisicing elit. At aspernatur animi itaque ut nisi, laboriosam modi minima facilis ex, tempore rem aliquid enim dolorum. Nesciunt enim beatae cum optio delectus?</div>
+                </div>
+                <div class="comments">
+                    <div>@username</div>
+                    <div>Lorem ipsum dolor sit amet consectetur adipisicing elit. At aspernatur animi itaque ut nisi, laboriosam modi minima facilis ex, tempore rem aliquid enim dolorum. Nesciunt enim beatae cum optio delectus?</div>
+                </div>
+                <div>
+                    <form action="{% url 'login' %}" method="post" class="addcomment">
+                        {% csrf_token %}
+                        <div><br></div>
+                        <div class="input-group mb-3">
+                            <input type="text" class="form-control" placeholder="Add comment as username" aria-label="Add comment as username" aria-describedby="button-addon2">
+                            <input class="btn btn-outline-primary" type="submit" id="button-addon2" value="Add Comment">
+                        </div>
+                    </form>
+                </div>
             </div>
-            <div class="col">
+            <div class="col listing-about">
                 <div class="card border-primary mb-3" style="max-width: 18rem;">
-                    <div class="card-header">About the Listing</div>
+                    <div class="card-header bg-primary text-light">About the Listing</div>
                     <div class="card-body text-primary">
-                        <h5 class="card-title">Primary card title</h5>
-                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                        <p class="card-text">Category: Fashion</p>
+                        <p class="card-text">Date Listed: 12/05/2021</p>
+                        <p class="card-text">Listed by: username</p>
+                        
                     </div>
                 </div>
             </div>

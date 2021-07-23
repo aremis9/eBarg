@@ -182,6 +182,10 @@ form {
     flex-flow: row wrap;
 }
 
+.listing-mid {
+    position: relative;
+}
+
 .listing-image-container {
     margin: auto;
     width: auto;
@@ -211,7 +215,44 @@ form {
     font-size: 0.6rem;
 }
 
+.placebid {
+    position: absolute;
+    bottom: 0;
+    width: 250px;
+    text-align: start;
+    margin-bottom: 0;
+}
+
+.placebid .input-group {
+    margin-bottom: 0 !important;
+}
+
+.comment-section {
+    text-align: start;
+}
+
+.comments {
+    padding-left: 20px;
+    margin-bottom: 20px;
+}
+
+.addcomment {
+    padding: 0;
+    padding-left: 20px;
+}
+
+.listing-about > .card {
+    margin-left: auto;
+    margin-right: 0;
+}
+
 @media screen and (max-width: 991.8px) {
+
+    .placebid {
+        position: relative;
+        margin-right: auto;
+        margin-left: auto;
+    }
 
     .listing-detail {
         padding: 20px 0;
@@ -225,4 +266,18 @@ form {
     .badge {
         margin: auto;
     }
+
+    .below-listing {
+        padding-top: 0;
+    }
+
+    .listing-about {
+        margin-bottom: 30px;
+        order: -1;
+    }
+
+    .listing-about > .card {
+        margin-right: auto;
+    }
+
 }
