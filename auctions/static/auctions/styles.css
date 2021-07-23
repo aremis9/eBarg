@@ -173,3 +173,56 @@ form {
     padding-top: 4vw;
     padding-bottom: 4vw;
 }
+
+
+/* Listing */
+
+.listing-row {
+    justify-content: stretch;
+    flex-flow: row wrap;
+}
+
+.listing-image-container {
+    margin: auto;
+    width: auto;
+    min-width: 280px;
+    max-width: 400px;
+    max-height: 450px;
+}
+
+.listing-image {
+    align-self: center;
+    height: 0;
+    width: 100%;
+    padding-bottom: 100%;
+    background-image: url(https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/dog-puppy-on-garden-royalty-free-image-1586966191.jpg?crop=1.00xw:0.669xh;0,0.190xh&resize=1200:*);
+    background-size: contain;
+    background-repeat: repeat;
+    background-position: center;
+    background-color: transparent;
+}
+
+.listing-detail {
+    text-align: start;
+}
+
+.wshlist {
+    vertical-align: middle;
+    font-size: 0.6rem;
+}
+
+@media screen and (max-width: 991.8px) {
+
+    .listing-detail {
+        padding: 20px 0;
+        text-align: center;
+    }
+
+    .listing-detail p {
+        text-align: justify;
+    }
+
+    .badge {
+        margin: auto;
+    }
+}

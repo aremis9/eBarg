@@ -1,0 +1,39 @@
+{% extends "auctions/layout.html" %}
+{% load static %}
+{% block body %}
+    
+    <div class="container">
+        <div class="row listing-row">
+            <div class="col listing-image-container">
+                <div class="listing-image"></div>
+            </div>
+            <div class="col-lg-8 col-sm-12">
+                <div class=" listing-detail">
+                    <h2>Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                        <a class="btn badge bg-primary ctgry-badge wshlist">Add to wishlist</a>
+                    </h2>
+                    <h5>Price: <span class="price">$500</span></h5>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consequuntur nobis, quae id ut dicta itaque dolore dolor, vero consectetur commodi amet libero provident ex, ab sint. Ratione obcaecati iure laborum.<span class="badge bg-secondary ctgry-badge">Category</span></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-sm-12">
+                hi
+            </div>
+            <div class="col">
+                <div class="card border-primary mb-3" style="max-width: 18rem;">
+                    <div class="card-header">About the Listing</div>
+                    <div class="card-body text-primary">
+                        <h5 class="card-title">Primary card title</h5>
+                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
