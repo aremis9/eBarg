@@ -164,3 +164,12 @@ form {
 .registerinput .label {
     width: 165px;
 }
+
+
+
+/* Categories */
+
+.categories > div {
+    padding-top: 4vw;
+    padding-bottom: 4vw;
+}
