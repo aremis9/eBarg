@@ -2,29 +2,38 @@
 
 {% block body %}
 
-    <h2>Register</h2>
-
     {% if message %}
-        <div>{{ message }}</div>
+        <div class="alert alert-danger fade show" role="alert">
+            {{ message }}
+        </div>
     {% endif %}
 
     <form action="{% url 'register' %}" method="post">
         {% csrf_token %}
-        <div class="form-group">
-            <input class="form-control" autofocus type="text" name="username" placeholder="Username">
-        </div>
-        <div class="form-group">
-            <input class="form-control" type="email" name="email" placeholder="Email Address">
-        </div>
-        <div class="form-group">
-            <input class="form-control" type="password" name="password" placeholder="Password">
-        </div>
-        <div class="form-group">
-            <input class="form-control" type="password" name="confirmation" placeholder="Confirm Password">
+        <h1>Register</h1>
+        <div><br></div>
+        <div class="registerinput">
+            <div class="input-group mb-3">
+                <span class="input-group-text label" id="inputGroup-sizing-default">Email Adress</span>
+                <input type="email" name="email" value="{{ email }}" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+            </div>
+            <div class="input-group mb-3">
+                <span class="input-group-text label" id="inputGroup-sizing-default">Username</span>
+                <input type="text" name="username" value="{{ username }}" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+            </div>
+            <div class="input-group mb-3">
+                <span class="input-group-text label" id="inputGroup-sizing-default">Password</span>
+                <input type="password" name="password" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+            </div>
+            <div class="input-group mb-3">
+                <span class="input-group-text label" id="inputGroup-sizing-default">Confirm Password</span>
+                <input type="password" name="confirmation" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+            </div>
         </div>
         <input class="btn btn-primary" type="submit" value="Register">
+        <div><br><br></div>
+        Already have an account? <a href="{% url 'login' %}">Login here.</a>
     </form>
 
-    Already have an account? <a href="{% url 'login' %}">Log In here.</a>
 
 {% endblock %}

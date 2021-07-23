@@ -8,17 +8,17 @@ from django import forms
 
 from .models import User
 
-user = ''
 
 def index(request):
     return render(request, "auctions/index.html", {
-        'user': user,
+        'user': request.user,
         'image': 'https://qph.fs.quoracdn.net/main-qimg-06697523db4cb85b25b8cf1ce95f2d4e'
     })
 
 
 
 def login_view(request):
+
     if request.user.is_authenticated:
         return redirect('/')
     if request.method == "POST":
@@ -26,14 +26,12 @@ def login_view(request):
         # Attempt to sign user in
         username = request.POST["username"]
         password = request.POST["password"]
-        global user
         user = authenticate(request, username=username, password=password)
         # Check if authentication successful
         if user is not None:
             login(request, user)
             return HttpResponseRedirect(reverse('index'))
         else:
-            user = ''
             return render(request, "auctions/login.html", {
                 "message": "Invalid username and/or password."
             })
@@ -51,13 +49,15 @@ def register(request):
     if request.method == "POST":
         username = request.POST["username"]
         email = request.POST["email"]
-
-        # Ensure password matches confirmation
         password = request.POST["password"]
         confirmation = request.POST["confirmation"]
+
+        # Ensure password matches confirmation
         if password != confirmation:
             return render(request, "auctions/register.html", {
-                "message": "Passwords must match."
+                "message": "Passwords don\'t match",
+                'email': email,
+                'username': username
             })
 
         # Attempt to create new user
@@ -66,9 +66,11 @@ def register(request):
             user.save()
         except IntegrityError:
             return render(request, "auctions/register.html", {
-                "message": "Username already taken."
+                "message": "Username already taken"
             })
+
         login(request, user)
         return HttpResponseRedirect(reverse("index"))
+
     else:
         return render(request, "auctions/register.html")

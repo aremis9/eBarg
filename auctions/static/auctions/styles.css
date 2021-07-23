@@ -69,6 +69,9 @@ a:hover {
     }
 }
 
+.alert {
+    text-align: center !important;
+}
 
 
 /* Index */
@@ -152,7 +155,12 @@ form {
     box-shadow: rgba(0, 0, 0, 0.08) 0px 2px 5px, rgba(0, 0, 0, 0.08) 0px 2px 5px;
 }
 
-.logininput .label {
+.logininput .label, .registerinput .label {
     background-color: #b3e7ca;
     width: 100px;
+    justify-content: center;
+}
+
+.registerinput .label {
+    width: 165px;
 }

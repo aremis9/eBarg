@@ -3,7 +3,9 @@
 {% block body %}
 
     {% if message %}
-        <div>{{ message }}</div>
+        <div class="alert alert-danger fade show" role="alert">
+            {{ message }}
+        </div>
     {% endif %}
 
     <form action="{% url 'login' %}" method="post">
