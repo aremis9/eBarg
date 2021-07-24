@@ -232,13 +232,14 @@ form {
 }
 
 .comments {
-    padding-left: 20px;
+    text-align: justify;
+    padding-left: 40px;
     margin-bottom: 20px;
 }
 
 .addcomment {
     padding: 0;
-    padding-left: 20px;
+    padding-left: 40px;
 }
 
 .listing-about > .card {

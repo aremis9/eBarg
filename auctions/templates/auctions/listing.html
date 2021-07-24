@@ -19,9 +19,9 @@
                     <a href="" style="text-decoration: none;">
                         Add to Watchlist <img src="{% static 'auctions/img/star-regular.svg' %}" alt="*" style="width: 20px; vertical-align: middle; padding-bottom: 4px;">
                     </a>
-                    <form action="{% url 'login' %}" method="post" class="addcomment">
+                    <form action="{% url 'login' %}" method="post" class="addcomment" style="padding: 0;">
                         {% csrf_token %}
-                        <div class="input-group mb-3">
+                        <div class="input-group mb-3"">
                             <input type="text" class="form-control" placeholder="$$$" aria-label="$$$" aria-describedby="button-addon2">
                             <input class="btn btn-outline-primary" type="submit" id="button-addon2" value="Place Bid">
                         </div>
