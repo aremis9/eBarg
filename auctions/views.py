@@ -5,8 +5,22 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import redirect, render
 from django.urls import reverse
 from django import forms
-from .models import User
+from .models import User, Listing, Watchlist, Bid, Comment
 
+
+CATEGORIES = [
+    "Vehicles",
+    "Fashion",
+    "Books",
+    "Electronics",
+    "Collectibles & Art",
+    "Home Appliances",
+    "Toys & Hobbies",
+    "Health and Beauty",
+    "Uncategorized"
+]
+
+NOIMAGE = 'http://www.jazzmusicarchives.com/images/covers/quantic(united-kingdom)-the-sheepskin-sessions-20210219105013.jpg'
 
 def index(request):
     return render(request, "auctions/index.html", {
@@ -83,7 +97,9 @@ def register(request):
 
 
 def categories(request):
-    return render(request, "auctions/categories.html")
+    return render(request, "auctions/categories.html", {
+        "categories": CATEGORIES
+    })
 
 
 def listing(request):
@@ -91,4 +107,44 @@ def listing(request):
 
 
 def create(request):
-    return render(request, "auctions/create.html")
+    if request.method == "POST":
+        title = request.POST["title"]
+        description = request.POST["description"]
+        category = request.POST["category"]
+        imgurl = request.POST["imgurl"]
+        creator = request.user
+
+        if not title or not description or not category:
+            return render(request, "auctions/create.html", {
+                "title": title,
+                "description": description,
+                "imgurl": imgurl
+            })
+
+        if category not in CATEGORIES:
+            return render(request, "auctions/create.html", {
+                "message": "Invalid Category",
+                "title": title,
+                "description": description,
+                "imgurl": imgurl
+            })
+
+        if not imgurl:
+            imgurl = NOIMAGE
+
+        
+        try:
+            listing = Listing(
+                # title="hi",
+                # description= ,
+                # category= ,
+                # imgurl= ,
+                # creator= 
+            )
+        except:
+            pass
+
+    else:
+        return render(request, "auctions/create.html", {
+            "categories": CATEGORIES
+        })

@@ -19,27 +19,24 @@
             </div>
             <div class="input-group mb-3">
                 <span class="input-group-text label" id="inputGroup-sizing-default">Description</span>
-                <textarea class="form-control" name="description" id="" cols="30" rows="5"></textarea>
+                <textarea class="form-control" name="description" value="{{ description }}" id="" cols="30" rows="5" required></textarea>
             </div>
             <div class="input-group mb-3">
                 <span class="input-group-text label" id="inputGroup-sizing-default">Category</span>
                 <select class="form-select selectcategory" name="category" required>
                     <option selected disabled value="">Select Category</option>
-                    <option>1</option>
-                    <option>2</option>
-                    <option>3</option>
-                    <option>4</option>
-                    <option>5</option>
+                    {% for category in categories %}
+                        <option value="{{ category }}">{{ category }}</option>
+                    {% endfor %}
                 </select>
             </div>
             <div class="input-group mb-3">
                 <span class="input-group-text label" id="inputGroup-sizing-default">Image URL <br> (optional)</span>
-                <textarea class="form-control imgurl" name="imgurl" id="" cols="30" rows="3" placeholder="https://your.image/1234567890.png"></textarea>
+                <textarea class="form-control imgurl" name="imgurl" value="{{ imgurl }}" id="" cols="30" rows="3" placeholder="https://your.image/1234567890.png"></textarea>
             </div>
         </div>
-        <input class="btn btn-primary" type="submit" value="Register">
+        <input class="btn btn-primary" type="submit" value="Create">
         <div><br><br></div>
-        Already have an account? <a href="{% url 'login' %}">Login here.</a>
     </form>
 
 {% endblock %}

@@ -9,61 +9,13 @@
 
     <div class="container">
         <div class="row categories">
-            <div class="col-lg-4 col-sm-6">
-                <a href="#" class="btn btn-primary card-footer text-center">
-                    Category
-                </a>
-            </div>
-            <div class="col-lg-4 col-sm-6">
-                <a href="#" class="btn btn-primary card-footer text-center">
-                    Category
-                </a>
-            </div>
-            <div class="col-lg-4 col-sm-6">
-                <a href="#" class="btn btn-primary card-footer text-center">
-                    Category
-                </a>
-            </div>
-            <div class="col-lg-4 col-sm-6">
-                <a href="#" class="btn btn-primary card-footer text-center">
-                    Category
-                </a>
-            </div>
-            <div class="col-lg-4 col-sm-6">
-                <a href="#" class="btn btn-primary card-footer text-center">
-                    Category
-                </a>
-            </div>
-            <div class="col-lg-4 col-sm-6">
-                <a href="#" class="btn btn-primary card-footer text-center">
-                    Category
-                </a>
-            </div>
-            <div class="col-lg-4 col-sm-6">
-                <a href="#" class="btn btn-primary card-footer text-center">
-                    Category
-                </a>
-            </div>
-            <div class="col-lg-4 col-sm-6">
-                <a href="#" class="btn btn-primary card-footer text-center">
-                    Category
-                </a>
-            </div>
-            <div class="col-lg-4 col-sm-6">
-                <a href="#" class="btn btn-primary card-footer text-center">
-                    Category
-                </a>
-            </div>
-            <div class="col-lg-4 col-sm-6">
-                <a href="#" class="btn btn-primary card-footer text-center">
-                    Category
-                </a>
-            </div>
-            <div class="col-lg-4 col-sm-6">
-                <a href="#" class="btn btn-primary card-footer text-center">
-                    Category
-                </a>
-            </div>
+            {% for category in categories %}
+                <div class="col-lg-4 col-sm-6">
+                    <a href="#" class="btn btn-primary card-footer text-center">
+                        {{ category }}
+                    </a>
+                </div>
+            {% endfor %}
         </div>
     </div>
 

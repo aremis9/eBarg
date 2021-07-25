@@ -12,8 +12,8 @@ class Listing(models.Model):
     title = models.CharField(max_length=64)
     description = models.TextField()
     category = models.CharField(max_length=64)
-    imgurl = models.TextField()
-    date = models.CharField(max_length=10)
+    imgurl = models.TextField(blank=True)
+    date = models.DateField(auto_now_add=True)
     creator = models.ForeignKey(User, on_delete=models.CASCADE, blank=False, related_name="user")
 
     def __str__(self):
@@ -38,6 +38,6 @@ class Bid(models.Model):
 class Comment(models.Model):
     listing = models.ForeignKey(Listing, on_delete=models.CASCADE, blank=False, related_name="commentedto")
     commentor = models.ForeignKey(User, on_delete=models.CASCADE, blank=False, related_name="commentor")
-    date = models.CharField(max_length=10)
+    date = models.DateField(auto_now_add=True)
     comment = models.TextField()
 
