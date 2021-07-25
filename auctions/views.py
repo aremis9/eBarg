@@ -46,10 +46,17 @@ def logout_view(request):
 
 def register(request):
     if request.method == "POST":
-        username = request.POST["username"]
         email = request.POST["email"]
+        username = request.POST["username"]
         password = request.POST["password"]
         confirmation = request.POST["confirmation"]
+
+        if not email or not username or not password or not confirmation:
+            return render(request, "auctions/register.html", {
+                "message": "All fields are required.",
+                'email': email,
+                'username': username
+            })
 
         # Ensure password matches confirmation
         if password != confirmation:
@@ -81,3 +88,7 @@ def categories(request):
 
 def listing(request):
     return render(request, "auctions/listing.html")
+
+
+def create(request):
+    return render(request, "auctions/create.html")

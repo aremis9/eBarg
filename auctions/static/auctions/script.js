@@ -1,10 +1,30 @@
 document.addEventListener("DOMContentLoaded", () => {
-    var cardimg = document.getElementsByClassName("card-img-top")[0]
+    
+    var selectcategory = document.getElementsByClassName('selectcategory')[0]
+    var categories = selectcategory.children
 
-    var width = cardimg.getBoundingClientRect().width
+    if (selectcategory.value == "") {
+        for (category of categories) {
+            if (category == categories[0]) {
+                continue
+            }
+            category.style.color = '#212529'
+        }
+        selectcategory.style.color = '#6c757d'
+    }
 
-    cardimg.style.height = cardimg.getBoundingClientRect().width
+    selectcategory.addEventListener('change', () => {
+        var placeholder = selectcategory.value
 
+        if (placeholder == "") {
+            selectcategory.style.color = '#6c757d'
+            console.log(placeholder)
+        }
+        else {
+            selectcategory.style.color = '#212529'
+            console.log(placeholder)
+        }
+    })
 
 
 })

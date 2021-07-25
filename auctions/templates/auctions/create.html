@@ -2,4 +2,44 @@
 {% load static %}
 {% block body %}
 
+    {% if message %}
+    <div class="alert alert-danger fade show" role="alert">
+        {{ message }}
+    </div>
+    {% endif %}
+
+    <form action="{% url 'register' %}" method="post">
+        {% csrf_token %}
+        <h1>Create Listing</h1>
+        <div><br></div>
+        <div class="registerinput">
+            <div class="input-group mb-3">
+                <span class="input-group-text label" id="inputGroup-sizing-default">Listing Title</span>
+                <input type="text" name="title" value="{{ title }}" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" required>
+            </div>
+            <div class="input-group mb-3">
+                <span class="input-group-text label" id="inputGroup-sizing-default">Description</span>
+                <textarea class="form-control" name="description" id="" cols="30" rows="5"></textarea>
+            </div>
+            <div class="input-group mb-3">
+                <span class="input-group-text label" id="inputGroup-sizing-default">Category</span>
+                <select class="form-select selectcategory" name="category" required>
+                    <option selected disabled value="">Select Category</option>
+                    <option>1</option>
+                    <option>2</option>
+                    <option>3</option>
+                    <option>4</option>
+                    <option>5</option>
+                </select>
+            </div>
+            <div class="input-group mb-3">
+                <span class="input-group-text label" id="inputGroup-sizing-default">Image URL</span>
+                <textarea class="form-control imgurl" name="imgurl" id="" cols="30" rows="3" placeholder="optional"></textarea>
+            </div>
+        </div>
+        <input class="btn btn-primary" type="submit" value="Register">
+        <div><br><br></div>
+        Already have an account? <a href="{% url 'login' %}">Login here.</a>
+    </form>
+
 {% endblock %}
