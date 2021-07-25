@@ -19,7 +19,7 @@
             </div>
             <div class="input-group mb-3">
                 <span class="input-group-text label" id="inputGroup-sizing-default">Description</span>
-                <textarea class="form-control" name="description" value="{{ description }}" id="" cols="30" rows="5" required></textarea>
+                <textarea class="form-control" name="description" id="" cols="30" rows="5" required>{{ description }}</textarea>
             </div>
             <div class="input-group mb-3">
                 <span class="input-group-text label" id="inputGroup-sizing-default">Category</span>
@@ -33,6 +33,10 @@
             <div class="input-group mb-3">
                 <span class="input-group-text label" id="inputGroup-sizing-default">Image URL <br> (optional)</span>
                 <textarea class="form-control imgurl" name="imgurl" value="{{ imgurl }}" id="" cols="30" rows="3" placeholder="https://your.image/1234567890.png"></textarea>
+            </div>
+            <div class="input-group mb-3">
+                <span class="input-group-text label" id="inputGroup-sizing-default">Starting Price</span>
+                <input class="form-control" name="price" value="{{ price }}" placeholder="$" required>
             </div>
         </div>
         <input class="btn btn-primary" type="submit" value="Create">

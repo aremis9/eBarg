@@ -5,15 +5,15 @@
     <div class="container">
         <div class="row listing-row">
             <div class="col listing-image-container">
-                <div class="listing-image"></div>
+                <div class="listing-image" style="background-image: url('{{ listing.imgurl }}');"></div>
             </div>
             <div class="col-lg-8 col-sm-12 listing-mid">
                 <div class="listing-detail">
-                    <h2>Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                    <h2>{{ listing.title }}
                         <a class="btn badge bg-primary ctgry-badge wshlist">Add to wishlist</a>
                     </h2>
-                    <h5>Price: <span class="price">$500</span></h5>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consequuntur nobis, quae id ut dicta itaque dolore dolor, vero consectetur commodi amet libero provident ex, ab sint. Ratione obcaecati iure laborum.<span class="badge bg-secondary ctgry-badge">Category</span></p>
+                    <h5>Price: <span class="price">${{ listing.price }}</span></h5>
+                    <p>{{ listing.description }}</p>
                 </div>
                 <div class="placebid">
                     <a href="" style="text-decoration: none;">
@@ -22,7 +22,7 @@
                     <form action="{% url 'login' %}" method="post" class="addcomment" style="padding: 0;">
                         {% csrf_token %}
                         <div class="input-group mb-3"">
-                            <input type="text" class="form-control" placeholder="$$$" aria-label="$$$" aria-describedby="button-addon2">
+                            <input type="number" min="{{ listing.price }}" value="{{ listing.price }}" class="form-control" placeholder="$" aria-label="$" aria-describedby="button-addon2">
                             <input class="btn btn-outline-primary" type="submit" id="button-addon2" value="Place Bid">
                         </div>
                     </form>
@@ -59,9 +59,9 @@
                 <div class="card border-primary mb-3" style="max-width: 18rem;">
                     <div class="card-header bg-primary text-light">About the Listing</div>
                     <div class="card-body text-primary">
-                        <p class="card-text">Category: Fashion</p>
-                        <p class="card-text">Date Listed: 12/05/2021</p>
-                        <p class="card-text">Listed by: username</p>
+                        <p class="card-text"><span class="badge bg-secondary">Category:  </span><a href="/categories/{{ listing.category }}">{{ listing.category }}</a></p>
+                        <p class="card-text"><span class="badge bg-secondary">Date Listed:</span> {{ listing.date }}</p>
+                        <p class="card-text"><span class="badge bg-secondary">Listed by:</span> {{ listing.creator }}</p>
                         
                     </div>
                 </div>

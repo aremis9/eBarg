@@ -24,8 +24,10 @@ CATEGORIES = [
 NOIMAGE = 'http://www.jazzmusicarchives.com/images/covers/quantic(united-kingdom)-the-sheepskin-sessions-20210219105013.jpg'
 
 def index(request):
+    listing = Listing.objects.order_by('date')
     return render(request, "auctions/index.html", {
         'user': request.user,
+        'listing': listing,
         'image': 'https://qph.fs.quoracdn.net/main-qimg-06697523db4cb85b25b8cf1ce95f2d4e'
     })
 
@@ -102,8 +104,19 @@ def categories(request):
     })
 
 
-def listing(request):
-    return render(request, "auctions/listing.html")
+def category(request, category):
+    listing = Listing.objects.filter(category=category)
+    return render(request, "auctions/category.html", {
+        "category": category,
+        "listing": listing
+    })
+
+
+def listing(request, id):
+    listing = Listing.objects.get(pk=id)
+    return render(request, "auctions/listing.html", {
+        'listing': listing
+    })
 
 
 @login_required
@@ -111,20 +124,36 @@ def create(request):
     if request.method == "POST":
         title = request.POST["title"]
         description = request.POST["description"]
+        price = request.POST["price"]
         category = request.POST["category"]
         imgurl = request.POST["imgurl"]
         creator = User.objects.get(username=request.user)
 
-        if not title or not description or not category:
+        try:
+            price = float(price)
+        except:
             return render(request, "auctions/create.html", {
+                "message": "Invalid Starting Price",
+                "categories": CATEGORIES,
                 "title": title,
                 "description": description,
-                "imgurl": imgurl
+                "imgurl": imgurl,
+            })
+
+        if not title or not description or not category or not price:
+            return render(request, "auctions/create.html", {
+                "message": "Input required fields.",
+                "categories": CATEGORIES,
+                "title": title,
+                "description": description,
+                "imgurl": imgurl,
+                "price": price
             })
 
         if category not in CATEGORIES:
             return render(request, "auctions/create.html", {
                 "message": "Invalid Category",
+                "categories": CATEGORIES,
                 "title": title,
                 "description": description,
                 "imgurl": imgurl
@@ -137,13 +166,13 @@ def create(request):
         new_listing = Listing(
             title=title,
             description=description,
+            price=price,
             category=category,
             imgurl=imgurl,
             creator=creator
         )
 
         new_listing.save()
-        print(Listing.objects.all())
 
         return HttpResponseRedirect('/')
 

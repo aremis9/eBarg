@@ -12,6 +12,7 @@ class User(AbstractUser):
 class Listing(models.Model):
     title = models.CharField(max_length=64)
     description = models.TextField()
+    price = models.FloatField(blank=True)
     category = models.CharField(max_length=64)
     imgurl = models.TextField(blank=True)
     date = models.DateField(auto_now_add=True)
