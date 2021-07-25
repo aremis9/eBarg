@@ -104,7 +104,6 @@ hr {
     height: 0;
     width: 100%;
     padding-bottom: 100%;
-    background-image: url(https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/dog-puppy-on-garden-royalty-free-image-1586966191.jpg?crop=1.00xw:0.669xh;0,0.190xh&resize=1200:*);
     background-size: contain;
     background-repeat: repeat;
     background-position: center;
@@ -210,7 +209,7 @@ form {
     text-align: start;
 }
 
-.wshlist {
+.watchlist {
     vertical-align: middle;
     font-size: 0.6rem;
 }

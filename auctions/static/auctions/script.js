@@ -1,5 +1,5 @@
 document.addEventListener("DOMContentLoaded", () => {
-    
+    // Create Page
     var selectcategory = document.getElementsByClassName('selectcategory')[0]
     var categories = selectcategory.children
 
@@ -18,13 +18,14 @@ document.addEventListener("DOMContentLoaded", () => {
 
         if (placeholder == "") {
             selectcategory.style.color = '#6c757d'
-            console.log(placeholder)
         }
         else {
             selectcategory.style.color = '#212529'
-            console.log(placeholder)
         }
     })
+
+
+    
 
 
 })

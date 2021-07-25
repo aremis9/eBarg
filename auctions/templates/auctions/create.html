@@ -2,6 +2,9 @@
 {% load static %}
 {% block body %}
 
+
+    <script src="{% static 'auctions/script.js' %}"></script>
+
     {% if message %}
     <div class="alert alert-danger fade show" role="alert">
         {{ message }}

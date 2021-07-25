@@ -1,3 +1,4 @@
+from django.contrib import admin
 from django.contrib.auth.models import AbstractUser
 from django.db import models
 from django.db.models.base import Model
@@ -15,7 +16,7 @@ class Listing(models.Model):
     price = models.FloatField(blank=True)
     category = models.CharField(max_length=64)
     imgurl = models.TextField(blank=True)
-    date = models.DateField(auto_now_add=True)
+    date = models.DateField(auto_now_add=True) 
     creator = models.ForeignKey(User, on_delete=models.CASCADE, blank=False, related_name="user")
 
     def __str__(self):
@@ -27,7 +28,8 @@ class Watchlist(models.Model):
     listing = models.ManyToManyField(Listing, blank=True, related_name="watchlist")
 
     def __str__(self):
-        return f"{self.user} watches {self.listing}"
+        return f"{self.watcher}: watching {self.listing.count()} listings"
+
 
 
 class Bid(models.Model):
@@ -43,3 +45,9 @@ class Comment(models.Model):
     date = models.DateField(auto_now_add=True)
     comment = models.TextField()
 
+
+class ListingAdmin(admin.ModelAdmin):
+    list_display = ("id", "title", "price", "creator")
+
+class WatchlistAdmin(admin.ModelAdmin):
+    list_display = ("watcher",)

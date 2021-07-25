@@ -6,6 +6,7 @@ from django.shortcuts import redirect, render
 from django.urls import reverse
 from django import forms
 from .models import *
+import json
 # User, Listing, Watchlist, Bid, Comment
 
 
@@ -112,8 +113,45 @@ def category(request, category):
     })
 
 
+def listing0(request):
+    return HttpResponseRedirect('/')
+
+
 def listing(request, id):
     listing = Listing.objects.get(pk=id)
+    if request.method == "POST":
+        username = request.POST["user"]
+        listing_id = request.POST["listing"]
+
+        watcher = User.objects.get(username=username)
+        watching = Listing.objects.get(pk=listing_id)
+
+        if watching != listing:
+            status = 'not added'
+            return HttpResponse(json.dumps(status))
+
+
+        if watcher.pk in Watchlist.objects.values_list('watcher', flat=True):
+            # idk = Watchlist.objects.filter(watcher=watcher.pk).values_list('listing', flat=True)
+            pass
+        
+        else:
+            watchlist = Watchlist(
+                watcher=watcher,
+            )
+
+            watchlist.save()
+
+        watchlist = Watchlist.objects.get(watcher=watcher.pk)
+        if watching.pk in list(Watchlist.objects.values_list('listing', flat=True)):
+            is_watching = False
+            watchlist.listing.remove(watching.pk)
+        else:
+            is_watching = True
+            watchlist.listing.add(watching.pk)
+
+        return HttpResponse(json.dumps('added'))
+
     return render(request, "auctions/listing.html", {
         'listing': listing
     })

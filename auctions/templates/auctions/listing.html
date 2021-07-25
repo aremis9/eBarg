@@ -1,6 +1,7 @@
 {% extends "auctions/layout.html" %}
 {% load static %}
 {% block body %}
+
     <div><br></div>
     <div class="container">
         <div class="row listing-row">
@@ -10,15 +11,15 @@
             <div class="col-lg-8 col-sm-12 listing-mid">
                 <div class="listing-detail">
                     <h2>{{ listing.title }}
-                        <a class="btn badge bg-primary ctgry-badge wshlist">Add to wishlist</a>
+                        <a class="btn badge bg-primary ctgry-badge watchlist" href="#">Add to wishlist</a>
                     </h2>
                     <h5>Price: <span class="price">${{ listing.price }}</span></h5>
                     <p>{{ listing.description }}</p>
                 </div>
                 <div class="placebid">
-                    <a href="" style="text-decoration: none;">
-                        Add to Watchlist <img src="{% static 'auctions/img/star-regular.svg' %}" alt="*" style="width: 20px; vertical-align: middle; padding-bottom: 4px;">
-                    </a>
+                    <!-- <a href="" style="text-decoration: none;">
+                        Add to Watchlist <img src="{# static 'auctions/img/star-regular.svg' #}" alt="*" style="width: 20px; vertical-align: middle; padding-bottom: 4px;">
+                    </a> -->
                     <form action="{% url 'login' %}" method="post" class="addcomment" style="padding: 0;">
                         {% csrf_token %}
                         <div class="input-group mb-3"">
@@ -59,7 +60,7 @@
                 <div class="card border-primary mb-3" style="max-width: 18rem;">
                     <div class="card-header bg-primary text-light">About the Listing</div>
                     <div class="card-body text-primary">
-                        <p class="card-text"><span class="badge bg-secondary">Category:  </span><a href="/categories/{{ listing.category }}">{{ listing.category }}</a></p>
+                        <p class="card-text"><span class="badge bg-secondary">Category:</span>   <a href="/categories/{{ listing.category }}">{{ listing.category }}</a></p>
                         <p class="card-text"><span class="badge bg-secondary">Date Listed:</span> {{ listing.date }}</p>
                         <p class="card-text"><span class="badge bg-secondary">Listed by:</span> {{ listing.creator }}</p>
                         
@@ -68,5 +69,34 @@
             </div>
         </div>
     </div>
+    {% csrf_token %}
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    <script>
+        // Watchlist
+
+        var watchlist = document.getElementsByClassName('watchlist')[0]
+        console.log(watchlist)
+
+        watchlist.addEventListener('click', () => {
+            $.ajax({
+                url : '/listing/{{ listing.id }}/',
+                type : "POST",
+                data : {
+                    user: '{{ user }}',
+                    listing: parseInt('{{ listing.id }}'),
+                    csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val(),
+                }
+            }).done(function(status){
+                watchlist.innerHTML = "Remove from watchlist"
+                watchlist.style.setProperty('background-color', 'gray', 'important')
+                console.log(status)
+                // This is the ajax.done() method, where you can fire events after the ajax method is complete 
+
+                // For instance, you could hide/display your add/remove button here
+                
+            });
+        })
+    </script>
 
 {% endblock %}
