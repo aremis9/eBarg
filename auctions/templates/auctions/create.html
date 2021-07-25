@@ -8,7 +8,7 @@
     </div>
     {% endif %}
 
-    <form action="{% url 'register' %}" method="post">
+    <form action="{% url 'create' %}" method="post">
         {% csrf_token %}
         <h1>Create Listing</h1>
         <div><br></div>

@@ -1,6 +1,7 @@
 from django.contrib.auth.models import AbstractUser
 from django.db import models
 from django.db.models.base import Model
+from django.forms import ModelForm
 
 # User, Listing, Watchlist, Bid, Comment
 

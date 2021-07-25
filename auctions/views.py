@@ -5,7 +5,8 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import redirect, render
 from django.urls import reverse
 from django import forms
-from .models import User, Listing, Watchlist, Bid, Comment
+from .models import *
+# User, Listing, Watchlist, Bid, Comment
 
 
 CATEGORIES = [
@@ -27,7 +28,6 @@ def index(request):
         'user': request.user,
         'image': 'https://qph.fs.quoracdn.net/main-qimg-06697523db4cb85b25b8cf1ce95f2d4e'
     })
-
 
 
 def login_view(request):
@@ -106,13 +106,14 @@ def listing(request):
     return render(request, "auctions/listing.html")
 
 
+@login_required
 def create(request):
     if request.method == "POST":
         title = request.POST["title"]
         description = request.POST["description"]
         category = request.POST["category"]
         imgurl = request.POST["imgurl"]
-        creator = request.user
+        creator = User.objects.get(username=request.user)
 
         if not title or not description or not category:
             return render(request, "auctions/create.html", {
@@ -133,16 +134,19 @@ def create(request):
             imgurl = NOIMAGE
 
         
-        try:
-            listing = Listing(
-                # title="hi",
-                # description= ,
-                # category= ,
-                # imgurl= ,
-                # creator= 
-            )
-        except:
-            pass
+        new_listing = Listing(
+            title=title,
+            description=description,
+            category=category,
+            imgurl=imgurl,
+            creator=creator
+        )
+
+        new_listing.save()
+        print(Listing.objects.all())
+
+        return HttpResponseRedirect('/')
+
 
     else:
         return render(request, "auctions/create.html", {
