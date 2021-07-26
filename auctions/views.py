@@ -142,6 +142,7 @@ def listing(request, id):
 
             watchlist.save()
 
+
         watchlist = Watchlist.objects.get(watcher=watcher.pk)
         if watching.pk in list(Watchlist.objects.values_list('listing', flat=True)):
             is_watching = False
@@ -150,7 +151,7 @@ def listing(request, id):
             is_watching = True
             watchlist.listing.add(watching.pk)
 
-        return HttpResponse(json.dumps('added'))
+        return HttpResponse(json.dumps(is_watching))
 
     return render(request, "auctions/listing.html", {
         'listing': listing

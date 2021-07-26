@@ -88,9 +88,15 @@
                     csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val(),
                 }
             }).done(function(status){
-                watchlist.innerHTML = "Remove from watchlist"
-                watchlist.style.setProperty('background-color', 'gray', 'important')
-                console.log(status)
+
+                if (status == 'true') {
+                    watchlist.innerHTML = "Remove from watchlist"
+                    watchlist.style.setProperty('background-color', 'gray', 'important')
+                }
+                else {
+                    watchlist.innerHTML = "Add to watchlist"
+                    watchlist.style.setProperty('background-color', '#0d6efd', 'important')
+                }
                 // This is the ajax.done() method, where you can fire events after the ajax method is complete 
 
                 // For instance, you could hide/display your add/remove button here
