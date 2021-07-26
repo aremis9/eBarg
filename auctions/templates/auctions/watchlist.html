@@ -1,0 +1,39 @@
+{% extends "auctions/layout.html" %}
+{% load static %}
+{% block body %}
+    <div><br></div>
+    <h1 id="categories">
+        <div style="text-decoration: none; color: black;">Your Watchlist</div>
+    </h1>
+    <hr>
+
+    <div class="container">
+        <div class="row">
+            {% if not listing %}
+                <h3>Empty</h3>
+            {% else %}
+                {% for l in listing %}
+                    <div class="col-lg-3 col-md-4 col-sm-6">
+                        <div class="card h-100 text-start">
+                            <div class="card-img-top" style="background-image: url('{{ l.imgurl }}');"></div>
+                            <div class="card-body">
+                                <h5 class="card-title">{{ l.title|capfirst|truncatewords:5 }}
+                                    <span class="badge bg-secondary ctgry-badge">{{ l.category }}</span>
+                                </h5>
+                                Price: <span class="price">${{ l.price }}</span>
+                                <p class="card-text">{{ l.description|truncatewords:12 }}</p>
+                            </div>
+                            <a href="/listing/{{ l.pk }}/" class="btn btn-primary card-footer text-center">
+                                <!-- <div class="card-footer text-center"> -->
+                                    View
+                                    <!-- <small class="text-muted">View</small> -->
+                                <!-- </div> -->
+                            </a>
+                        </div>
+                    </div>
+                {% endfor %}
+            {% endif %}
+        </div>
+    </div>
+
+{% endblock %}

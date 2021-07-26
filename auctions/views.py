@@ -230,3 +230,15 @@ def create(request):
         return render(request, "auctions/create.html", {
             "categories": CATEGORIES
         })
+
+
+@login_required()
+def watchlist(request):
+    userpk = User.objects.get(username=request.user).pk
+    listings = list(Watchlist.objects.get(watcher=userpk).listing.all())
+    # .values_list('listing', flat=True)
+    # watchlist = Listing.objects
+    print(listings)
+    return render(request, "auctions/watchlist.html", {
+        "listing": listings
+    })

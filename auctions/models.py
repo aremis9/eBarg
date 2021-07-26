@@ -11,10 +11,23 @@ class User(AbstractUser):
 
 
 class Listing(models.Model):
+
+    CATEGORIES = [
+        ("Vehicles", "Vehicles"),
+        ("Fashion", "Fashion"),
+        ("Books", "Books"),
+        ("Electronics", "Electronics"),
+        ("Collectibles & Art", "Collectibles & Art"),
+        ("Home Appliances", "Home Appliances"),
+        ("Toys & Hobbies", "Toys & Hobbies"),
+        ("Health and Beauty", "Health and Beauty"),
+        ("Uncategorized", "Uncategorized")
+    ]
+
     title = models.CharField(max_length=64)
     description = models.TextField()
     price = models.FloatField(blank=True)
-    category = models.CharField(max_length=64)
+    category = models.CharField(max_length=18, choices=CATEGORIES)
     imgurl = models.TextField(blank=True)
     date = models.DateField(auto_now_add=True) 
     creator = models.ForeignKey(User, on_delete=models.CASCADE, blank=False, related_name="user")
@@ -47,7 +60,7 @@ class Comment(models.Model):
 
 
 class ListingAdmin(admin.ModelAdmin):
-    list_display = ("id", "title", "price", "creator")
+    list_display = ("id", "title", "category", "price", "creator")
 
 class WatchlistAdmin(admin.ModelAdmin):
     list_display = ("watcher",)
