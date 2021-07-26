@@ -136,11 +136,11 @@ def listing(request, id):
             pass
         
         else:
-            watchlist = Watchlist(
+            addwatchlist = Watchlist(
                 watcher=watcher,
             )
 
-            watchlist.save()
+            addwatchlist.save()
 
 
         watchlist = Watchlist.objects.get(watcher=watcher.pk)
@@ -153,8 +153,18 @@ def listing(request, id):
 
         return HttpResponse(json.dumps(is_watching))
 
+
+    userpk = User.objects.get(username=request.user).pk
+    userwatchlist = list(Watchlist.objects.filter(watcher=userpk).values_list('listing', flat=True))
+    if id in userwatchlist:
+        is_watching = True
+    else:
+        is_watching = False
+
+
     return render(request, "auctions/listing.html", {
-        'listing': listing
+        'listing': listing,
+        'is_watching': is_watching
     })
 
 

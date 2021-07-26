@@ -11,7 +11,11 @@
             <div class="col-lg-8 col-sm-12 listing-mid">
                 <div class="listing-detail">
                     <h2>{{ listing.title }}
-                        <a class="btn badge bg-primary ctgry-badge watchlist" href="#">Add to wishlist</a>
+                        {% if is_watching %}
+                            <a class="btn badge bg-primary ctgry-badge watchlist" href="#" style="background-color: gray !important;">Remove from watchlist</a>
+                        {% else %}
+                            <a class="btn badge bg-primary ctgry-badge watchlist" href="#">Add to watchlist</a>
+                        {% endif %}
                     </h2>
                     <h5>Price: <span class="price">${{ listing.price }}</span></h5>
                     <p>{{ listing.description }}</p>
