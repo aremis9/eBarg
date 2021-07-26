@@ -1,6 +1,11 @@
 {% extends "auctions/layout.html" %}
 {% load static %}
 {% block body %}
+    {% if message %}
+        <div class="alert alert-danger fade show" role="alert">
+            {{ message }}
+        </div>
+    {% endif %}
 
     <div><br></div>
     <div class="container">
@@ -41,20 +46,22 @@
         <div class="row">
             <div class="col-lg-8 col-sm-12 comment-section">
                 <h4>Comments</h4>
-                <div class="comments">
-                    <div>@username</div>
-                    <div>Lorem ipsum dolor sit amet consectetur adipisicing elit. At aspernatur animi itaque ut nisi, laboriosam modi minima facilis ex, tempore rem aliquid enim dolorum. Nesciunt enim beatae cum optio delectus?</div>
-                </div>
-                <div class="comments">
-                    <div>@username</div>
-                    <div>Lorem ipsum dolor sit amet consectetur adipisicing elit. At aspernatur animi itaque ut nisi, laboriosam modi minima facilis ex, tempore rem aliquid enim dolorum. Nesciunt enim beatae cum optio delectus?</div>
-                </div>
+                {% if not comments %}
+                    <h6>No comments</h6>
+                {% endif %}
+                {% for comment in comments %}
+                    <div class="comments">
+                        <div style="color: #0465D2;">@{{ comment.commenter }}</div>
+                        <div style="font-size: 0.65rem;">{{ comment.date }}</div>
+                        <div>{{ comment.comment }}</div>
+                    </div>
+                {% endfor %}
                 <div>
-                    <form action="{% url 'login' %}" method="post" class="addcomment">
+                    <form action="/listing/{{ listing.id }}/" method="post" class="addcomment">
                         {% csrf_token %}
                         <div><br></div>
                         <div class="input-group mb-3">
-                            <input type="text" class="form-control" placeholder="Add comment as username" aria-label="Add comment as username" aria-describedby="button-addon2">
+                            <input type="text" class="form-control" name="comment" placeholder="Add comment as @{{ request.user }}" aria-label="Add comment as username" aria-describedby="button-addon2" required>
                             <input class="btn btn-outline-primary" type="submit" id="button-addon2" value="Add Comment">
                         </div>
                     </form>
@@ -77,10 +84,10 @@
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
     <script>
-        // Watchlist
+
+        // Add to/Remove from Watchlist
 
         var watchlist = document.getElementsByClassName('watchlist')[0]
-        console.log(watchlist)
 
         watchlist.addEventListener('click', () => {
             $.ajax({
@@ -107,6 +114,7 @@
                 
             });
         })
+
     </script>
 
 {% endblock %}

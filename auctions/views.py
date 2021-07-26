@@ -119,40 +119,52 @@ def listing0(request):
 
 def listing(request, id):
     listing = Listing.objects.get(pk=id)
+    comments = list(Comment.objects.filter(listing=id))
+    print(comments)
     if request.method == "POST":
-        username = request.POST["user"]
-        listing_id = request.POST["listing"]
+        if 'user' and 'listing' in request.POST:
+            username = request.POST["user"]
+            listing_id = request.POST["listing"]
 
-        watcher = User.objects.get(username=username)
-        watching = Listing.objects.get(pk=listing_id)
+            watcher = User.objects.get(username=username)
+            watching = Listing.objects.get(pk=listing_id)
 
-        if watching != listing:
-            status = 'not added'
-            return HttpResponse(json.dumps(status))
+            if watching != listing:
+                status = 'not added'
+                return HttpResponse(json.dumps(status))
 
 
-        if watcher.pk in Watchlist.objects.values_list('watcher', flat=True):
-            # idk = Watchlist.objects.filter(watcher=watcher.pk).values_list('listing', flat=True)
-            pass
-        
-        else:
-            addwatchlist = Watchlist(
-                watcher=watcher,
+            if watcher.pk not in Watchlist.objects.values_list('watcher', flat=True):
+                addwatchlist = Watchlist(
+                    watcher=watcher,
+                )
+
+                addwatchlist.save()
+
+
+            watchlist = Watchlist.objects.get(watcher=watcher.pk)
+            if watching.pk in list(Watchlist.objects.values_list('listing', flat=True)):
+                is_watching = False
+                watchlist.listing.remove(watching.pk)
+            else:
+                is_watching = True
+                watchlist.listing.add(watching.pk)
+
+            return HttpResponse(json.dumps(is_watching))
+
+        elif 'comment' in request.POST:
+            commenter = User.objects.get(username=request.user)
+            comment = request.POST['comment']
+
+            addcomment = Comment(
+                listing=listing,
+                commenter=commenter,
+                comment=comment
             )
 
-            addwatchlist.save()
-
-
-        watchlist = Watchlist.objects.get(watcher=watcher.pk)
-        if watching.pk in list(Watchlist.objects.values_list('listing', flat=True)):
-            is_watching = False
-            watchlist.listing.remove(watching.pk)
-        else:
-            is_watching = True
-            watchlist.listing.add(watching.pk)
-
-        return HttpResponse(json.dumps(is_watching))
-
+            addcomment.save()
+            
+            comments.append(addcomment)
 
     userpk = User.objects.get(username=request.user).pk
     userwatchlist = list(Watchlist.objects.filter(watcher=userpk).values_list('listing', flat=True))
@@ -164,7 +176,8 @@ def listing(request, id):
 
     return render(request, "auctions/listing.html", {
         'listing': listing,
-        'is_watching': is_watching
+        'is_watching': is_watching,
+        'comments': comments
     })
 
 

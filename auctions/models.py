@@ -54,9 +54,12 @@ class Bid(models.Model):
 
 class Comment(models.Model):
     listing = models.ForeignKey(Listing, on_delete=models.CASCADE, blank=False, related_name="commentedto")
-    commentor = models.ForeignKey(User, on_delete=models.CASCADE, blank=False, related_name="commentor")
+    commenter = models.ForeignKey(User, on_delete=models.CASCADE, blank=False, related_name="commenter")
     date = models.DateField(auto_now_add=True)
-    comment = models.TextField()
+    comment = models.TextField(blank=False)
+
+    def __str__(self):
+        return f"{self.commenter} commented on ({self.listing})"
 
 
 class ListingAdmin(admin.ModelAdmin):
@@ -64,3 +67,6 @@ class ListingAdmin(admin.ModelAdmin):
 
 class WatchlistAdmin(admin.ModelAdmin):
     list_display = ("watcher",)
+
+class CommentAdmin(admin.ModelAdmin):
+    list_display = ("listing", "commenter", "date", "comment")
