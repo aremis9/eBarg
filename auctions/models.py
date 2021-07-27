@@ -31,6 +31,7 @@ class Listing(models.Model):
     imgurl = models.TextField(blank=True)
     date = models.DateField(auto_now_add=True) 
     creator = models.ForeignKey(User, on_delete=models.CASCADE, blank=False, related_name="user")
+    isactive = models.BooleanField(default=True)
 
     def __str__(self):
         return f"{self.id}: {self.title}"
@@ -65,7 +66,7 @@ class Comment(models.Model):
 
 
 class ListingAdmin(admin.ModelAdmin):
-    list_display = ("id", "title", "category", "price", "creator")
+    list_display = ("id", "title", "category", "price", "isactive", "creator")
 
 class WatchlistAdmin(admin.ModelAdmin):
     list_display = ("watcher",)

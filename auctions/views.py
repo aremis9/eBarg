@@ -25,7 +25,7 @@ CATEGORIES = [
 NOIMAGE = 'http://www.jazzmusicarchives.com/images/covers/quantic(united-kingdom)-the-sheepskin-sessions-20210219105013.jpg'
 
 def index(request):
-    listing = Listing.objects.order_by('date')
+    listing = Listing.objects.order_by('date').filter(isactive=True)
     return render(request, "auctions/index.html", {
         'user': request.user,
         'listing': listing,
@@ -163,8 +163,6 @@ def listing(request, id):
             if message != 'Invalid Bid!':
                 highest = Bid.objects.latest('bid')
                 bidrule = '''The bid must be greater than the current highest bid'''
-                print(highest)
-                print(bidrule)
                 if listing.price == highest.bid:
                     if bid >= listing.price:
                         pass
@@ -201,17 +199,23 @@ def listing(request, id):
                 addcomment.save()
                 
                 comments.append(addcomment)
+        
+        elif 'closebid' in request.POST:
+            listing.isactive = False
+            listing.save()
 
-    userpk = User.objects.get(username=request.user).pk
-    userwatchlist = list(Watchlist.objects.filter(watcher=userpk).values_list('listing', flat=True))
-    if id in userwatchlist:
-        is_watching = True
+
+    if request.user.is_authenticated:
+        userpk = User.objects.get(username=request.user).pk
+        userwatchlist = list(Watchlist.objects.filter(watcher=userpk).values_list('listing', flat=True))
+        if id in userwatchlist:
+            is_watching = True
+        else:
+            is_watching = False
     else:
         is_watching = False
 
-
     highestbid = Bid.objects.latest('bid').bid
-    print(highestbid)
     comments = list(Comment.objects.filter(listing=id))
 
     return render(request, "auctions/listing.html", {
@@ -302,7 +306,6 @@ def watchlist(request):
     listings = list(Watchlist.objects.get(watcher=userpk).listing.all())
     # .values_list('listing', flat=True)
     # watchlist = Listing.objects
-    print(listings)
     return render(request, "auctions/watchlist.html", {
         "listing": listings
     })

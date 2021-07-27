@@ -16,10 +16,12 @@
             <div class="col-lg-8 col-sm-12 listing-mid">
                 <div class="listing-detail">
                     <h2>{{ listing.title }}
-                        {% if is_watching %}
-                            <a class="btn badge bg-primary ctgry-badge watchlist" href="#" style="background-color: gray !important;">Remove from watchlist</a>
-                        {% else %}
-                            <a class="btn badge bg-primary ctgry-badge watchlist" href="#">Add to watchlist</a>
+                        {% if user.is_authenticated %}
+                            {% if is_watching %}
+                                <a class="btn badge bg-primary ctgry-badge watchlist" href="#" style="background-color: gray !important;">Remove from watchlist</a>
+                            {% else %}
+                                <a class="btn badge bg-primary ctgry-badge watchlist" href="#">Add to watchlist</a>
+                            {% endif %}
                         {% endif %}
                     </h2>
                     <p style="font-size: 0.8rem;margin-bottom: 0;">Starting Bid: <span class="price">${{ listing.price }}</span></p>
@@ -32,10 +34,25 @@
                     </a> -->
                     <form action="/listing/{{ listing.id }}/" method="post" class="addcomment" style="padding: 0;">
                         {% csrf_token %}
-                        <div class="input-group mb-3"">
-                            <input type="number" name="bid" min="{{ listing.price }}" value="{{ listing.price }}" class="form-control" placeholder="$" aria-label="$" aria-describedby="button-addon2">
-                            <input class="btn btn-outline-primary" type="submit" id="button-addon2" value="Place Bid">
-                        </div>
+                        {% if not listing.isactive %}
+                            <div style="align-self: flex-start;color: red;">This auction is closed.</div>
+                        {% else %}
+                            {% if user.is_authenticated %}
+                                {% if user == listing.creator %}
+                                    <div style="align-self: flex-start;">
+                                        <input type="text" value="Close" name="closebid" hidden>
+                                        <input class="btn btn-outline-danger" type="submit" id="button-addon2" value="Close Auction">
+                                    </div>
+                                {% else %}
+                                    <div class="input-group mb-3"">
+                                        <input type="number" name="bid" min="{{ listing.price }}" value="{{ listing.price }}" class="form-control" placeholder="$" aria-label="$" aria-describedby="button-addon2">
+                                        <input class="btn btn-outline-primary" type="submit" id="button-addon2" value="Place Bid">
+                                    </div>
+                                {% endif %}
+                            {% else %}
+                                <div style="align-self: flex-start;"><a href="/register">Sign up</a> to place a bid</div>
+                            {% endif %}
+                        {% endif %}
                     </form>
                     
                 </div>
@@ -47,26 +64,30 @@
         <div class="row">
             <div class="col-lg-8 col-sm-12 comment-section">
                 <h4>Comments</h4>
-                {% if not comments %}
-                    <h6>No comments</h6>
-                {% endif %}
-                {% for comment in comments %}
-                    <div class="comments">
-                        <div style="color: #0465D2;">@{{ comment.commenter }}</div>
-                        <div style="font-size: 0.65rem;">{{ comment.date }}</div>
-                        <div>{{ comment.comment }}</div>
-                    </div>
-                {% endfor %}
-                <div>
-                    <form action="/listing/{{ listing.id }}/" method="post" class="addcomment">
-                        {% csrf_token %}
-                        <div><br></div>
-                        <div class="input-group mb-3">
-                            <input type="text" class="form-control" name="comment" placeholder="Add comment as @{{ request.user }}" aria-label="Add comment as username" aria-describedby="button-addon2" required>
-                            <input class="btn btn-outline-primary" type="submit" id="button-addon2" value="Add Comment">
+                {% if user.is_authenticated %}
+                    {% if not comments %}
+                        <h6>No comments</h6>
+                    {% endif %}
+                    {% for comment in comments %}
+                        <div class="comments">
+                            <div style="color: #0465D2;">@{{ comment.commenter }}</div>
+                            <div style="font-size: 0.65rem;">{{ comment.date }}</div>
+                            <div>{{ comment.comment }}</div>
                         </div>
-                    </form>
-                </div>
+                    {% endfor %}
+                    <div>
+                        <form action="/listing/{{ listing.id }}/" method="post" class="addcomment">
+                            {% csrf_token %}
+                            <div><br></div>
+                            <div class="input-group mb-3">
+                                <input type="text" class="form-control" name="comment" placeholder="Add comment as @{{ request.user }}" aria-label="Add comment as username" aria-describedby="button-addon2" required>
+                                <input class="btn btn-outline-primary" type="submit" id="button-addon2" value="Add Comment">
+                            </div>
+                        </form>
+                    </div>
+                {% else %}
+                    <div class="signuptobid" style="align-self: flex-start;"><a href="/register">Sign up</a> to place a bid</div>
+                {% endif %}
             </div>
             <div class="col listing-about">
                 <div class="card border-primary mb-3" style="max-width: 18rem;">
