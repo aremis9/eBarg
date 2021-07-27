@@ -75,7 +75,7 @@
                                     </div>
                                 {% else %}
                                     <div class="input-group mb-3"">
-                                        <input type="number" name="bid" min="{{ listing.price }}" value="{{ listing.price }}" class="form-control" placeholder="$" aria-label="$" aria-describedby="button-addon2">
+                                        <input type="number" name="bid" min="{{ highestbid.bid }}" value="{{ listing.price }}" class="form-control" placeholder="$" aria-label="$" aria-describedby="button-addon2">
                                         <input class="btn btn-outline-primary" type="submit" id="button-addon2" value="Place Bid">
                                     </div>
                                 {% endif %}
@@ -152,7 +152,7 @@
                     csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val(),
                 }
             }).done(function(status){
-
+                console.log(status)
                 if (status == 'true') {
                     watchlist.innerHTML = "Remove from watchlist"
                     watchlist.style.setProperty('background-color', 'gray', 'important')

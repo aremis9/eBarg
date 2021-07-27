@@ -157,7 +157,7 @@ def listing(request, id):
 
 
             watchlist = Watchlist.objects.get(watcher=watcher.pk)
-            if watching.pk in list(Watchlist.objects.values_list('listing', flat=True)):
+            if watching.pk in list(Watchlist.objects.filter(watcher=watcher.pk).values_list('listing', flat=True)):
                 is_watching = False
                 watchlist.listing.remove(watching.pk)
             else:
