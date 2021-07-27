@@ -176,6 +176,11 @@ form {
 
 /* Listing */
 
+.listing-card {
+    padding-top: 3vw;
+    padding-bottom: 3vw;
+}
+
 .listing-row {
     justify-content: stretch;
     flex-flow: row wrap;

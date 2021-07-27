@@ -26,9 +26,13 @@ NOIMAGE = 'http://www.jazzmusicarchives.com/images/covers/quantic(united-kingdom
 
 def index(request):
     listing = Listing.objects.order_by('date').filter(isactive=True)
+    listings = {}
+    for l in listing:
+        listings[l] = Bid.objects.filter(listing=l.pk).latest('bid').bid
+
     return render(request, "auctions/index.html", {
         'user': request.user,
-        'listing': listing,
+        'listings': listings,
         'image': 'https://qph.fs.quoracdn.net/main-qimg-06697523db4cb85b25b8cf1ce95f2d4e'
     })
 
@@ -91,6 +95,12 @@ def register(request):
             return render(request, "auctions/register.html", {
                 "message": "Username already taken"
             })
+        
+        create_watchlist = Watchlist(
+            watcher=user,
+        )
+
+        create_watchlist.save()
 
         login(request, user)
         return HttpResponseRedirect(reverse("index"))
@@ -106,10 +116,14 @@ def categories(request):
 
 
 def category(request, category):
-    listing = Listing.objects.filter(category=category)
+    listing = Listing.objects.order_by('date').filter(isactive=True, category=category)
+    listings = {}
+    for l in listing:
+        listings[l] = Bid.objects.filter(listing=l.pk).latest('bid').bid
+        
     return render(request, "auctions/category.html", {
         "category": category,
-        "listing": listing
+        "listings": listings
     })
 
 
@@ -120,6 +134,7 @@ def listing0(request):
 def listing(request, id):
     listing = Listing.objects.get(pk=id)
     message = ''
+    comments = list(Comment.objects.filter(listing=id))
     if request.method == "POST":
         if 'user' and 'listing' in request.POST:
             username = request.POST["user"]
@@ -215,8 +230,7 @@ def listing(request, id):
     else:
         is_watching = False
 
-    highestbid = Bid.objects.latest('bid')
-    comments = list(Comment.objects.filter(listing=id))
+    highestbid = Bid.objects.filter(listing=id).latest('bid')
 
     return render(request, "auctions/listing.html", {
         'message': message,
@@ -232,7 +246,7 @@ def create(request):
     if request.method == "POST":
         title = request.POST["title"]
         description = request.POST["description"]
-        price = request.POST["price"]
+        price = request.POST["price"].replace(',', '')
         category = request.POST["category"]
         imgurl = request.POST["imgurl"]
         creator = User.objects.get(username=request.user)
@@ -291,7 +305,7 @@ def create(request):
 
         current_price.save()
 
-        return HttpResponseRedirect('/')
+        return HttpResponseRedirect('/listing/' + str(new_listing.pk))
 
 
     else:

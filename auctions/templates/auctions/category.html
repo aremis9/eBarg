@@ -9,13 +9,16 @@
 
     <div class="container">
         <div class="row">
-            {% for l in listing %}
-                <div class="col-lg-3 col-md-4 col-sm-6">
+            {% if not listings %}
+                <h6>None</h6>
+            {% endif %}
+            {% for l, hbid in listings.items %}
+                <div class="col-lg-3 col-md-4 col-sm-6 listing-card">
                     <div class="card h-100 text-start">
                         <div class="card-img-top" style="background-image: url('{{ l.imgurl }}');"></div>
                         <div class="card-body">
                             <h5 class="card-title">{{ l.title|capfirst|truncatewords:5 }}</h5>
-                            Price: <span class="price">${{ l.price }}</span>
+                            Price: <span class="price">${{ hbid }}</span>
                             <p class="card-text">{{ l.description|truncatewords:12 }}</p>
                         </div>
                         <a href="/listing/{{ l.pk }}/" class="btn btn-primary card-footer text-center">

@@ -94,7 +94,6 @@
         <div class="row">
             <div class="col-lg-8 col-sm-12 comment-section">
                 <h4>Comments</h4>
-                {% if user.is_authenticated %}
                     {% if not comments %}
                         <h6>No comments</h6>
                     {% endif %}
@@ -105,6 +104,8 @@
                             <div>{{ comment.comment }}</div>
                         </div>
                     {% endfor %}
+
+                {% if user.is_authenticated %}
                     <div>
                         <form action="/listing/{{ listing.id }}/" method="post" class="addcomment">
                             {% csrf_token %}
@@ -116,7 +117,7 @@
                         </form>
                     </div>
                 {% else %}
-                    <div class="signuptobid" style="align-self: flex-start;"><a href="/register">Sign up</a> to place a bid</div>
+                    <div class="signuptobid" style="align-self: flex-start;"><a href="/register">Sign up</a> to comment</div>
                 {% endif %}
             </div>
             <div class="col listing-about">
