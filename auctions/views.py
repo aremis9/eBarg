@@ -119,8 +119,7 @@ def listing0(request):
 
 def listing(request, id):
     listing = Listing.objects.get(pk=id)
-    comments = list(Comment.objects.filter(listing=id))
-    print(comments)
+    message = ''
     if request.method == "POST":
         if 'user' and 'listing' in request.POST:
             username = request.POST["user"]
@@ -152,19 +151,56 @@ def listing(request, id):
 
             return HttpResponse(json.dumps(is_watching))
 
+        elif 'bid' in request.POST:
+            bid = request.POST['bid']
+            bidder = User.objects.get(username=request.user)
+
+            try:
+                bid = float(bid)
+            except ValueError:
+                message = 'Invalid Bid!'
+
+            if message != 'Invalid Bid!':
+                highest = Bid.objects.latest('bid')
+                bidrule = '''The bid must be greater than the current highest bid'''
+                print(highest)
+                print(bidrule)
+                if listing.price == highest.bid:
+                    if bid >= listing.price:
+                        pass
+                    else:
+                        message = bidrule
+                if bid >= listing.price and bid > highest.bid:
+                    pass
+                else:
+                    message = bidrule
+                
+                if message != bidrule:
+
+                    addbid = Bid(
+                        listing=listing,
+                        bidder=bidder,
+                        bid=bid,
+                    )
+
+                    addbid.save()
+
         elif 'comment' in request.POST:
             commenter = User.objects.get(username=request.user)
             comment = request.POST['comment']
 
-            addcomment = Comment(
-                listing=listing,
-                commenter=commenter,
-                comment=comment
-            )
+            if not comment:
+                message = 'Comment must not be empty!'
+            else:
+                addcomment = Comment(
+                    listing=listing,
+                    commenter=commenter,
+                    comment=comment
+                )
 
-            addcomment.save()
-            
-            comments.append(addcomment)
+                addcomment.save()
+                
+                comments.append(addcomment)
 
     userpk = User.objects.get(username=request.user).pk
     userwatchlist = list(Watchlist.objects.filter(watcher=userpk).values_list('listing', flat=True))
@@ -174,8 +210,14 @@ def listing(request, id):
         is_watching = False
 
 
+    highestbid = Bid.objects.latest('bid').bid
+    print(highestbid)
+    comments = list(Comment.objects.filter(listing=id))
+
     return render(request, "auctions/listing.html", {
+        'message': message,
         'listing': listing,
+        'highestbid': highestbid,
         'is_watching': is_watching,
         'comments': comments
     })
@@ -235,6 +277,15 @@ def create(request):
         )
 
         new_listing.save()
+
+
+        current_price = Bid(
+            listing=new_listing,
+            bidder=creator,
+            bid=price
+        )
+
+        current_price.save()
 
         return HttpResponseRedirect('/')
 

@@ -6,5 +6,5 @@ from .models import *
 admin.site.register(User, UserAdmin)
 admin.site.register(Listing, ListingAdmin)
 admin.site.register(Watchlist, WatchlistAdmin)
-admin.site.register(Bid)
+admin.site.register(Bid, BidAdmin)
 admin.site.register(Comment, CommentAdmin)

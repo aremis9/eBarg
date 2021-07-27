@@ -49,7 +49,9 @@ class Bid(models.Model):
     listing = models.ForeignKey(Listing, on_delete=models.CASCADE, blank=False, related_name="listing")
     bidder = models.ForeignKey(User, on_delete=models.CASCADE, blank=False, related_name="bidder")
     bid = models.FloatField()
-    is_highest = models.BooleanField(default=False)
+
+    def __str__(self):
+        return f"{self.bidder}: {self.listing} for ${self.bid}"
 
 
 class Comment(models.Model):
@@ -67,6 +69,9 @@ class ListingAdmin(admin.ModelAdmin):
 
 class WatchlistAdmin(admin.ModelAdmin):
     list_display = ("watcher",)
+
+class BidAdmin(admin.ModelAdmin):
+    list_display = ("listing", "bid", "bidder")
 
 class CommentAdmin(admin.ModelAdmin):
     list_display = ("listing", "commenter", "date", "comment")
