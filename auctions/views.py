@@ -215,7 +215,7 @@ def listing(request, id):
     else:
         is_watching = False
 
-    highestbid = Bid.objects.latest('bid').bid
+    highestbid = Bid.objects.latest('bid')
     comments = list(Comment.objects.filter(listing=id))
 
     return render(request, "auctions/listing.html", {
